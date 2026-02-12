@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessible SVG Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .intro {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .demo-section {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .demo-section h2 {
+            color: #555;
+            margin-top: 0;
+            border-bottom: 2px solid #2196F3;
+            padding-bottom: 10px;
+        }
+        .demo-section h3 {
+            color: #666;
+            margin-top: 20px;
+        }
+        .example {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #2196F3;
+            border-radius: 4px;
+        }
+        .example p {
+            color: #666;
+            margin: 10px 0;
+        }
+        code {
+            background: #e8e8e8;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        pre {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            line-height: 1.5;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: #f8f8f2;
+        }
+        .good {
+            border-left-color: #4CAF50;
+        }
+        .bad {
+            border-left-color: #F44336;
+        }
+        .warning {
+            border-left-color: #FF9800;
+        }
+        svg {
+            display: block;
+            margin: 15px 0;
+        }
+        .flex-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .flex-item {
+            flex: 1;
+            min-width: 200px;
+        }
+        button {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #1976D2;
+        }
+        button:focus {
+            outline: 3px solid #64B5F6;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Accessible SVG Demo</h1>
+
+    <div class="intro">
+        <h2>Why Accessibility Matters</h2>
+        <p>Making SVGs accessible ensures that all users, including those using screen readers or other assistive technologies, can understand and interact with your graphics. This demo shows best practices for creating accessible SVG graphics.</p>
+    </div>
+
+    <div class="demo-section">
+        <h2>1. Decorative vs. Informative SVGs</h2>
+        
+        <h3>Decorative SVG (Hidden from Screen Readers)</h3>
+        <div class="example good">
+            <p><strong>Use Case:</strong> When the SVG is purely decorative and doesn't convey meaningful information.</p>
+            <svg width="100" height="100" aria-hidden="true" focusable="false">
+                <circle cx="50" cy="50" r="40" fill="#E91E63"/>
+            </svg>
+            <pre><code>&lt;svg aria-hidden="true" focusable="false"&gt;
+  &lt;circle cx="50" cy="50" r="40" fill="#E91E63"/&gt;
+&lt;/svg&gt;</code></pre>
+            <p>✓ Use <code>aria-hidden="true"</code> and <code>focusable="false"</code> for decorative graphics.</p>
+        </div>
+
+        <h3>Informative SVG (Announced by Screen Readers)</h3>
+        <div class="example good">
+            <p><strong>Use Case:</strong> When the SVG conveys important information.</p>
+            <svg width="100" height="100" role="img" aria-labelledby="circle-title">
+                <title id="circle-title">A pink circle representing a successful action</title>
+                <circle cx="50" cy="50" r="40" fill="#4CAF50"/>
+            </svg>
+            <pre><code>&lt;svg role="img" aria-labelledby="circle-title"&gt;
+  &lt;title id="circle-title"&gt;A pink circle representing a successful action&lt;/title&gt;
+  &lt;circle cx="50" cy="50" r="40" fill="#4CAF50"/&gt;
+&lt;/svg&gt;</code></pre>
+            <p>✓ Use <code>role="img"</code>, <code>&lt;title&gt;</code>, and <code>aria-labelledby</code> for meaningful graphics.</p>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <h2>2. Using Title and Description Elements</h2>
+        
+        <div class="example good">
+            <p><strong>Best Practice:</strong> Combine <code>&lt;title&gt;</code> and <code>&lt;desc&gt;</code> for detailed information.</p>
+            <svg width="200" height="200" role="img" aria-labelledby="chart-title chart-desc">
+                <title id="chart-title">Sales Growth Chart</title>
+                <desc id="chart-desc">A bar chart showing 30% increase in sales from Q1 to Q2 2024</desc>
+                <rect x="20" y="120" width="40" height="60" fill="#2196F3"/>
+                <rect x="80" y="80" width="40" height="100" fill="#4CAF50"/>
+                <rect x="140" y="40" width="40" height="140" fill="#FF9800"/>
+                <text x="40" y="195" text-anchor="middle" font-size="12" fill="#333">Q1</text>
+                <text x="100" y="195" text-anchor="middle" font-size="12" fill="#333">Q2</text>
+                <text x="160" y="195" text-anchor="middle" font-size="12" fill="#333">Q3</text>
+            </svg>
+            <pre><code>&lt;svg role="img" aria-labelledby="chart-title chart-desc"&gt;
+  &lt;title id="chart-title"&gt;Sales Growth Chart&lt;/title&gt;
+  &lt;desc id="chart-desc"&gt;A bar chart showing 30% increase in sales from Q1 to Q2 2024&lt;/desc&gt;
+  &lt;!-- chart elements --&gt;
+&lt;/svg&gt;</code></pre>
+            <p>✓ <code>&lt;title&gt;</code> provides a short label, <code>&lt;desc&gt;</code> gives detailed description.</p>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <h2>3. Interactive SVG with Keyboard Support</h2>
+        
+        <div class="example good">
+            <p><strong>Accessible Button with SVG Icon:</strong></p>
+            <button type="button" onclick="alert('Button clicked!')">
+                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                Add Item
+            </button>
+            <pre><code>&lt;button type="button"&gt;
+  &lt;svg aria-hidden="true" focusable="false"&gt;
+    &lt;path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/&gt;
+  &lt;/svg&gt;
+  Add Item
+&lt;/button&gt;</code></pre>
+            <p>✓ Icon is decorative; button text provides context. Focus is on the button, not the SVG.</p>
+        </div>
+
+        <div class="example warning">
+            <p><strong>Icon-Only Button (Requires aria-label):</strong></p>
+            <button type="button" aria-label="Close dialog" onclick="alert('Close clicked!')">
+                <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                </svg>
+            </button>
+            <pre><code>&lt;button type="button" aria-label="Close dialog"&gt;
+  &lt;svg aria-hidden="true" focusable="false"&gt;
+    &lt;path fill="currentColor" d="M19 6.41..."/&gt;
+  &lt;/svg&gt;
+&lt;/button&gt;</code></pre>
+            <p>⚠ Icon-only buttons must have <code>aria-label</code> to describe their purpose.</p>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <h2>4. Color Contrast and Visual Accessibility</h2>
+        
+        <div class="flex-container">
+            <div class="flex-item example bad">
+                <p><strong>Poor Contrast:</strong></p>
+                <svg width="200" height="100">
+                    <rect width="200" height="100" fill="#FFEB3B"/>
+                    <text x="100" y="55" text-anchor="middle" font-size="16" fill="#FFF9C4">Low Contrast Text</text>
+                </svg>
+                <p>✗ Insufficient color contrast (1.2:1 ratio)</p>
+            </div>
+            
+            <div class="flex-item example good">
+                <p><strong>Good Contrast:</strong></p>
+                <svg width="200" height="100">
+                    <rect width="200" height="100" fill="#FFEB3B"/>
+                    <text x="100" y="55" text-anchor="middle" font-size="16" fill="#333" font-weight="bold">Clear Text</text>
+                </svg>
+                <p>✓ Sufficient color contrast (8.4:1 ratio)</p>
+            </div>
+        </div>
+        
+        <p>Use tools like WebAIM's Contrast Checker to ensure text meets WCAG AA standards (4.5:1 for normal text).</p>
+    </div>
+
+    <div class="demo-section">
+        <h2>5. Providing Text Alternatives</h2>
+        
+        <h3>Using aria-label</h3>
+        <div class="example good">
+            <p>Quick and simple alternative for simple graphics:</p>
+            <svg width="100" height="100" role="img" aria-label="Green checkmark indicating success">
+                <circle cx="50" cy="50" r="40" fill="#4CAF50"/>
+                <path d="M35 50 L45 60 L65 35" stroke="white" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <pre><code>&lt;svg role="img" aria-label="Green checkmark indicating success"&gt;
+  &lt;!-- graphic elements --&gt;
+&lt;/svg&gt;</code></pre>
+        </div>
+
+        <h3>Using Long Description for Complex Graphics</h3>
+        <div class="example good">
+            <p>For complex infographics or data visualizations:</p>
+            <svg width="300" height="200" role="img" aria-labelledby="infographic-title" aria-describedby="infographic-desc">
+                <title id="infographic-title">User Growth Trend</title>
+                <desc id="infographic-desc">Line chart showing user growth from January to December 2024. Started at 1000 users in January, peaked at 5000 users in July, and ended at 4500 users in December.</desc>
+                <polyline points="20,180 60,160 100,120 140,80 180,100 220,90 260,95 280,110" 
+                          fill="none" stroke="#2196F3" stroke-width="3"/>
+                <circle cx="20" cy="180" r="4" fill="#2196F3"/>
+                <circle cx="140" cy="80" r="4" fill="#2196F3"/>
+                <circle cx="280" cy="110" r="4" fill="#2196F3"/>
+            </svg>
+            <pre><code>&lt;svg role="img" aria-labelledby="title" aria-describedby="desc"&gt;
+  &lt;title id="title"&gt;User Growth Trend&lt;/title&gt;
+  &lt;desc id="desc"&gt;Detailed description of data...&lt;/desc&gt;
+  &lt;!-- graphic elements --&gt;
+&lt;/svg&gt;</code></pre>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <h2>6. Accessibility Checklist</h2>
+        <ul>
+            <li>✓ Use <code>role="img"</code> for informative SVGs</li>
+            <li>✓ Add <code>aria-hidden="true"</code> and <code>focusable="false"</code> for decorative SVGs</li>
+            <li>✓ Provide <code>&lt;title&gt;</code> element with unique <code>id</code></li>
+            <li>✓ Add <code>&lt;desc&gt;</code> for complex graphics needing detailed description</li>
+            <li>✓ Use <code>aria-labelledby</code> to reference title (and desc if present)</li>
+            <li>✓ Ensure sufficient color contrast (minimum 4.5:1 for text)</li>
+            <li>✓ Don't rely solely on color to convey information</li>
+            <li>✓ Make interactive SVGs keyboard accessible</li>
+            <li>✓ Test with screen readers (NVDA, JAWS, VoiceOver)</li>
+            <li>✓ Keep SVG markup semantic and structured</li>
+        </ul>
+    </div>
+
+    <div class="demo-section">
+        <h2>7. Common Patterns Summary</h2>
+        
+        <h3>Decorative SVG Pattern:</h3>
+        <pre><code>&lt;svg aria-hidden="true" focusable="false"&gt;
+  &lt;!-- decorative graphics --&gt;
+&lt;/svg&gt;</code></pre>
+
+        <h3>Simple Informative SVG Pattern:</h3>
+        <pre><code>&lt;svg role="img" aria-label="Description of image"&gt;
+  &lt;!-- graphics --&gt;
+&lt;/svg&gt;</code></pre>
+
+        <h3>Complex Informative SVG Pattern:</h3>
+        <pre><code>&lt;svg role="img" aria-labelledby="title-id desc-id"&gt;
+  &lt;title id="title-id"&gt;Short title&lt;/title&gt;
+  &lt;desc id="desc-id"&gt;Detailed description&lt;/desc&gt;
+  &lt;!-- graphics --&gt;
+&lt;/svg&gt;</code></pre>
+
+        <h3>Icon in Button Pattern:</h3>
+        <pre><code>&lt;button aria-label="Action description"&gt;
+  &lt;svg aria-hidden="true" focusable="false"&gt;
+    &lt;!-- icon graphics --&gt;
+  &lt;/svg&gt;
+&lt;/button&gt;</code></pre>
+    </div>
+
+</body>
+</html>
